@@ -29,17 +29,23 @@ const state = {
   newData: {},
 };
 
-const createInfo = (data, optons) => {
+const CreateList = (el, index) => {
+  return (
+    <div key={index}>
+      <button className="buttonList">
+        <div>{index + 1}</div>
+        <div>{el.name || '---'}</div>
+        <div>{el.house || '---'}</div>
+        <div>{el.bloodStatus || '---'}</div>
+      </button>
+      <div className={`profil `}>123</div>
+    </div>
+  );
+};
+const CreateInfo = (data, optons) => {
   return (
     <div className="list">
-      {[...data[optons]].map((el, index) => (
-        <button key={index} className="buttonList">
-          <div>{index + 1}</div>
-          <div>{el.name || '---'}</div>
-          <div>{el.house || '---'}</div>
-          <div>{el.bloodStatus || '---'}</div>
-        </button>
-      ))}
+      {[...data[optons]].map((el, index) => CreateList(el, index))}
     </div>
   );
 };
@@ -47,6 +53,7 @@ const createInfo = (data, optons) => {
 export const App = () => {
   const [getdata, setData] = useState('');
   const [displayInfo, setDisplayInfo] = useState('');
+  const [display, setDisplay] = useState();
 
   const getDateReq = (optons) => {
     console.log('GET');
@@ -55,7 +62,7 @@ export const App = () => {
       if (xhr.status >= 200 && xhr.status < 400) {
         const data = JSON.parse(xhr.responseText);
         state.newData = sortData(data);
-        const newComonent = createInfo(state.newData, optons);
+        const newComonent = CreateInfo(state.newData, optons);
         setDisplayInfo(newComonent);
         console.log(state.newData);
         setData(state.newData);
@@ -80,7 +87,6 @@ export const App = () => {
           <div className="mainBox">
             <div className="info">{displayInfo}</div>
           </div>
-          <div className="profil">123</div>
         </div>
       </div>
     </div>
