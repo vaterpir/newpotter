@@ -1,0 +1,8 @@
+{
+  "parser": "babel-eslint",
+  "plugins": ["babel"],
+  "rules": {
+    "import/prefer-default-export": "off",
+    "strict": 0
+  }
+}
