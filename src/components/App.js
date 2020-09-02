@@ -1,13 +1,120 @@
 import React, { useState } from 'react';
+import Select from 'react-select';
+import { TableInfo } from './TableInfo';
+import { Menu } from './Menu';
+import { Profil } from './Profil';
+
 import '../styles/App.css';
 const xhr = new XMLHttpRequest();
-
+const profileURL = 'https://randomuser.me/api/';
 const baseURL = 'https://www.potterapi.com/v1/';
 const keyURL =
   '?key=$2a$10$dSooM7l5aj6uLNFOmwf/SObKzKhMgFSrbie2BUTrRmz5hw/jj6Wme';
 const mainURL = 'characters/';
 
-const sortData = (data) =>
+const state = {
+  newData: {},
+};
+
+export const App = () => {
+  const [displaySwitch, setDisplaySwitch] = useState(true);
+  const [data, setData] = useState([]);
+  const [avatar, setAvatar] = useState('');
+  let x = 2;
+
+  const getDateReq = () => {
+    setDisplaySwitch(true);
+    xhr.open('GET', `${baseURL}${mainURL}${keyURL}`, true);
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 400) {
+        const datareqest = JSON.parse(xhr.responseText);
+        console.log(datareqest);
+      } else {
+        console.log('error');
+      }
+    };
+    xhr.send();
+  };
+
+  const getAvatar = () => {
+    const url = 'https://randomuser.me/api/';
+    xhr.open('GET', url, true);
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 400) {
+        const data = JSON.parse(xhr.responseText);
+        setAvatar(data.results[0].picture.large);
+      } else {
+        console.log('error');
+      }
+    };
+    xhr.send();
+  };
+
+  const options = [
+    { value: 'Professor', label: 'Professor' },
+    { value: 'Student', label: 'Student' },
+    { value: 'Other', label: 'Other' },
+  ];
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      color: state.isSelected ? 'red' : 'blue',
+    }),
+  };
+  return (
+    <div className="App">
+      <div className="content">
+        <div className="Menu">
+          <div className="logoMenu">Harry Potter Characters:</div>
+          <div>
+            <Select
+              defaultValue={options[0]}
+              options={options}
+              styles={customStyles}
+              onChange={() => setDisplaySwitch(true)}
+            />
+          </div>
+        </div>
+        <div className={`Table ${!displaySwitch ? 'hidden' : ''}`}>
+          <button
+            onClick={() => {
+              setDisplaySwitch(false);
+              getAvatar();
+            }}
+          >
+            show profile
+          </button>
+        </div>
+
+        <div
+          className={`Profile ${displaySwitch ? 'hidden' : ''}`}
+          onClick={(event) => setDisplaySwitch(true)}
+          id="hiddenProfileOver"
+        >
+          <div
+            className="profileBox"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="headProfile">
+              <button onClick={() => setDisplaySwitch(true)}>X</button>
+            </div>
+
+            <div className="contentProfile">
+              <div className="avatarBox">
+                <div className="avatar">
+                  <img src={avatar}></img>
+                </div>
+                <div className="nameProfile">Name</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* const sortCharacters = (data) =>
   [...data].reduce(
     (acc, el, i) => {
       const role = [...String(el.role)].slice(0, 9).join('');
@@ -23,16 +130,15 @@ const sortData = (data) =>
       professors: [],
       other: [],
     },
-  );
-
-const state = {
-  newData: {},
-};
-
-const CreateList = (el, index) => {
+  ); 
+  
+  
+  
+  
+const CreateList = (el, index, setDisplay, display) => {
   return (
     <div key={index}>
-      <button className="buttonList">
+      <button className="buttonList" onClick={() => setDisplay(!display)}>
         <div>{index + 1}</div>
         <div>{el.name || '---'}</div>
         <div>{el.house || '---'}</div>
@@ -41,64 +147,6 @@ const CreateList = (el, index) => {
     </div>
   );
 };
-const CreateInfo = (data, optons) => {
-  return (
-    <div className="list">
-      {[...data[optons]].map((el, index) => CreateList(el, index))}
-    </div>
-  );
-};
 
-export const App = () => {
-  const [getdata, setData] = useState('');
-  const [displayInfo, setDisplayInfo] = useState('');
-  const [display, setDisplay] = useState();
-
-  const getDateReq = (optons) => {
-    console.log('GET');
-    xhr.open('GET', `${baseURL}${mainURL}${keyURL}`, true);
-    xhr.onload = () => {
-      if (xhr.status >= 200 && xhr.status < 400) {
-        const data = JSON.parse(xhr.responseText);
-        state.newData = sortData(data);
-        const newComonent = CreateInfo(state.newData, optons);
-        setDisplayInfo(newComonent);
-        console.log(state.newData);
-        setData(state.newData);
-      } else {
-        console.log('error');
-      }
-    };
-    xhr.send();
-  };
-
-  return (
-    <div className="App">
-      <div className="content">
-        <div className="headerMenu">
-          <div className="buttonMenu">
-            <button onClick={() => getDateReq('students')}>Students</button>
-            <button onClick={() => getDateReq('professors')}>Professors</button>
-            <button onClick={() => getDateReq('other')}>Other</button>
-          </div>
-        </div>
-        <div className="main">
-          <div className="mainBox">
-            <div className="info">{displayInfo}</div>
-            <div className="profil">
-              <div className="profilBox">
-                <div className="previewProfil">
-                  <div>
-                    <img src="https://imgholder.ru/200x200/8493a8/adb9ca&text=AVATAR&font=kelson" />
-                  </div>
-                  <div className="nameProfil">Name:</div>
-                </div>
-                <div className="descriptionProfil">More info ...</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+  
+  */
