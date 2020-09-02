@@ -38,7 +38,6 @@ const CreateList = (el, index) => {
         <div>{el.house || '---'}</div>
         <div>{el.bloodStatus || '---'}</div>
       </button>
-      <div className={`profil `}>123</div>
     </div>
   );
 };
@@ -86,6 +85,17 @@ export const App = () => {
         <div className="main">
           <div className="mainBox">
             <div className="info">{displayInfo}</div>
+            <div className="profil">
+              <div className="profilBox">
+                <div className="previewProfil">
+                  <div>
+                    <img src="https://imgholder.ru/200x200/8493a8/adb9ca&text=AVATAR&font=kelson" />
+                  </div>
+                  <div className="nameProfil">Name:</div>
+                </div>
+                <div className="descriptionProfil">More info ...</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
