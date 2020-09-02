@@ -42,13 +42,13 @@ const CreateList = (el, index, setDisplay, display) => {
         <div>{el.house || '---'}</div>
         <div>{el.bloodStatus || '---'}</div>
       </button>
-      <div className={`profil `}></div>
     </div>
   );
 };
 const CreateInfo = (data, optons, setDisplay, display) => {
   return (
     <div className="list">
+      
       {[...data[optons]].map((el, index) =>
         CreateList(el, index, setDisplay, display),
       )}
@@ -57,7 +57,6 @@ const CreateInfo = (data, optons, setDisplay, display) => {
 };
 
 export const App = () => {
-  const [getdata, setData] = useState('');
   const [displayInfo, setDisplayInfo] = useState('');
   const [display, setDisplay] = useState(false);
 
@@ -76,22 +75,12 @@ export const App = () => {
         );
         setDisplayInfo(newComonent);
         console.log(state.newData);
-        setData(state.newData);
       } else {
         console.log('error');
       }
     };
     xhr.send();
   };
-  {
-    /* 
-    
-
-<button onClick={() => setDisplay(!display)}>X</button>
-<div>
-          
-        </div> */
-  }
   return (
     <div className="App">
       <div className="content">

@@ -15,32 +15,64 @@ body {
 
 .content {
   width: 100%;
+  height: 100vh;
   background-color: #ffd89d;
   display: flex;
   flex-direction: column;
 }
-.show {
-  display: flex;
+.content > div:last-child {
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
 }
 
 .Menu {
+  position: fixed;
   width: 100%;
-  height: 50px;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  background-color: rgb(255, 238, 191);
+  border: 1px solid #000;
+  border-width: 0 0 2px 0;
 }
+.Menu > div {
+  width: 100%;
+  margin: 25px;
+}
+
 .buttonMenu {
   width: 100%;
+  max-width: 500px;
   height: 100%;
   display: flex;
   justify-content: center;
 }
 .buttonMenu > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 100%;
+  height: 50px;
+  margin: 0 10px;
 }
+
+.headList {
+  display: flex;
+}
+.headList > div {
+  width: 100%;
+  display: flex;
+}
+
 .info {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   overflow: auto;
@@ -80,6 +112,8 @@ body {
 }
 
 .list {
+  position: absolute;
+  top: 130px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -90,21 +124,8 @@ body {
   width: 100%;
 }
 
-.profil {
-  background-color: rgb(252, 228, 122);
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .table {
   background-color: #fff;
-}
-
-.tableBox {
 }
 
 .hidden {
@@ -115,11 +136,65 @@ body {
   width: 100%;
 }
 
+/* .headList {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  border: 0px;
+}
+.headList > div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #c07126;
+  border-width: 0 0 1px 0;
+}
+
+.headList > div > div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.headList > div > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.headList > div:first-child {
+  width: 20px;
+  max-width: 20px;
+  min-width: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+ */
+
+.Profil {
+  background-color: rgb(252, 228, 122);
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .Profil {
   width: 100%;
   height: 100%;
 }
 .Profil > button {
-  position: relative;
-  left: 90%;
+  position: absolute;
+  top: 150px;
+}
+
+
+button {
+  height: 20px;
 }
