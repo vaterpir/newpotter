@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { TableInfo } from './TableInfo';
+import { Menu } from './Menu';
+import { Profil } from './Profil';
+
 import '../styles/App.css';
 const xhr = new XMLHttpRequest();
 
@@ -7,7 +11,7 @@ const keyURL =
   '?key=$2a$10$dSooM7l5aj6uLNFOmwf/SObKzKhMgFSrbie2BUTrRmz5hw/jj6Wme';
 const mainURL = 'characters/';
 
-const sortData = (data) =>
+const sortCharacters = (data) =>
   [...data].reduce(
     (acc, el, i) => {
       const role = [...String(el.role)].slice(0, 9).join('');
@@ -29,23 +33,25 @@ const state = {
   newData: {},
 };
 
-const CreateList = (el, index) => {
+const CreateList = (el, index, setDisplay, display) => {
   return (
     <div key={index}>
-      <button className="buttonList">
+      <button className="buttonList" onClick={() => setDisplay(!display)}>
         <div>{index + 1}</div>
         <div>{el.name || '---'}</div>
         <div>{el.house || '---'}</div>
         <div>{el.bloodStatus || '---'}</div>
       </button>
-      <div className={`profil `}>123</div>
+      <div className={`profil `}></div>
     </div>
   );
 };
-const CreateInfo = (data, optons) => {
+const CreateInfo = (data, optons, setDisplay, display) => {
   return (
     <div className="list">
-      {[...data[optons]].map((el, index) => CreateList(el, index))}
+      {[...data[optons]].map((el, index) =>
+        CreateList(el, index, setDisplay, display),
+      )}
     </div>
   );
 };
@@ -53,7 +59,7 @@ const CreateInfo = (data, optons) => {
 export const App = () => {
   const [getdata, setData] = useState('');
   const [displayInfo, setDisplayInfo] = useState('');
-  const [display, setDisplay] = useState();
+  const [display, setDisplay] = useState(false);
 
   const getDateReq = (optons) => {
     console.log('GET');
@@ -61,8 +67,13 @@ export const App = () => {
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 400) {
         const data = JSON.parse(xhr.responseText);
-        state.newData = sortData(data);
-        const newComonent = CreateInfo(state.newData, optons);
+        state.newData = sortCharacters(data);
+        const newComonent = CreateInfo(
+          state.newData,
+          optons,
+          setDisplay,
+          display,
+        );
         setDisplayInfo(newComonent);
         console.log(state.newData);
         setData(state.newData);
@@ -72,20 +83,27 @@ export const App = () => {
     };
     xhr.send();
   };
+  {
+    /* 
+    
 
+<button onClick={() => setDisplay(!display)}>X</button>
+<div>
+          
+        </div> */
+  }
   return (
     <div className="App">
       <div className="content">
-        <div className="headerMenu">
-          <div className="buttonMenu">
-            <button onClick={() => getDateReq('students')}>Students</button>
-            <button onClick={() => getDateReq('professors')}>Professors</button>
-            <button onClick={() => getDateReq('other')}>Other</button>
-          </div>
+        <div>
+          <Menu getDateReq={getDateReq} />
         </div>
-        <div className="main">
-          <div className="mainBox">
-            <div className="info">{displayInfo}</div>
+        <div>
+          <div className={`${display ? 'hidden' : ''}`}>
+            <TableInfo info={displayInfo} setDisplay={setDisplay} />
+          </div>
+          <div className={`${!display ? 'hidden' : ''}`}>
+            <Profil display={display} setDisplay={setDisplay} />
           </div>
         </div>
       </div>
