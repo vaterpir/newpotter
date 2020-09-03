@@ -1,28 +1,29 @@
 import React from 'react';
-export const Menu = ({ getDateReq }) => {
+import Select from 'react-select';
+
+const optionsSelect = [
+  { value: 'Professor', label: 'Professor' },
+  { value: 'Student', label: 'Student' },
+  { value: 'Other', label: 'Other' },
+];
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? 'red' : 'blue',
+  }),
+};
+
+export const Menu = ({ setSwitch }) => {
   return (
     <div className="Menu">
-      <div className="buttonMenu">
-        <button onClick={() => getDateReq('students')}>Students</button>
-        <button onClick={() => getDateReq('professors')}>Professors</button>
-        <button onClick={() => getDateReq('other')}>Other</button>
-      </div>
+      <div className="logoMenu">Harry Potter Characters:</div>
       <div>
-        <div className="headList">
-          <div>№</div>
-          <div>
-            <div>Name</div>
-            <button>^</button>
-          </div>
-          <div>
-            <div>House</div>
-            <button>^</button>
-          </div>
-          <div>
-            <div>Blood Status</div>
-            <button>^</button>
-          </div>
-        </div>
+        <Select
+          defaultValue={optionsSelect[0]}
+          options={optionsSelect}
+          styles={customStyles}
+          onChange={() => setSwitch(true)}
+        />
       </div>
     </div>
   );

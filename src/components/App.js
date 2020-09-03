@@ -1,48 +1,30 @@
 import React, { useState } from 'react';
-import Select from 'react-select';
-import { TableInfo } from './TableInfo';
+import { Table } from './Table';
 import { Menu } from './Menu';
-import { Profil } from './Profil';
+import { Profile } from './Profile';
 
 import '../styles/App.css';
 const xhr = new XMLHttpRequest();
-const profileURL = 'https://randomuser.me/api/';
 const baseURL = 'https://www.potterapi.com/v1/';
 const keyURL =
   '?key=$2a$10$dSooM7l5aj6uLNFOmwf/SObKzKhMgFSrbie2BUTrRmz5hw/jj6Wme';
 const mainURL = 'characters/';
 
-const state = {
-  newData: {},
-};
-
 export const App = () => {
   const [displaySwitch, setDisplaySwitch] = useState(true);
   const [data, setData] = useState([]);
   const [avatar, setAvatar] = useState('');
-  let x = 2;
 
-  const getDateReq = () => {
-    setDisplaySwitch(true);
-    xhr.open('GET', `${baseURL}${mainURL}${keyURL}`, true);
-    xhr.onload = () => {
-      if (xhr.status >= 200 && xhr.status < 400) {
-        const datareqest = JSON.parse(xhr.responseText);
-        console.log(datareqest);
-      } else {
-        console.log('error');
-      }
-    };
-    xhr.send();
-  };
-
-  const getAvatar = () => {
-    const url = 'https://randomuser.me/api/';
+  const getAvatar = (url, type) => {
+    if (type === 'avatar') setAvatar('/src/img/avatar.jpg');
     xhr.open('GET', url, true);
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 400) {
         const data = JSON.parse(xhr.responseText);
-        setAvatar(data.results[0].picture.large);
+        if (type === 'avatar') setAvatar(data.results[0].picture.large);
+        else {
+          console.log(data);
+        }
       } else {
         console.log('error');
       }
@@ -50,65 +32,22 @@ export const App = () => {
     xhr.send();
   };
 
-  const options = [
-    { value: 'Professor', label: 'Professor' },
-    { value: 'Student', label: 'Student' },
-    { value: 'Other', label: 'Other' },
-  ];
-  const customStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      color: state.isSelected ? 'red' : 'blue',
-    }),
-  };
   return (
     <div className="App">
       <div className="content">
-        <div className="Menu">
-          <div className="logoMenu">Harry Potter Characters:</div>
-          <div>
-            <Select
-              defaultValue={options[0]}
-              options={options}
-              styles={customStyles}
-              onChange={() => setDisplaySwitch(true)}
-            />
-          </div>
-        </div>
-        <div className={`Table ${!displaySwitch ? 'hidden' : ''}`}>
-          <button
-            onClick={() => {
-              setDisplaySwitch(false);
-              getAvatar();
-            }}
-          >
-            show profile
-          </button>
-        </div>
+        <Menu setSwitch={setDisplaySwitch} />
 
-        <div
-          className={`Profile ${displaySwitch ? 'hidden' : ''}`}
-          onClick={(event) => setDisplaySwitch(true)}
-          id="hiddenProfileOver"
-        >
-          <div
-            className="profileBox"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="headProfile">
-              <button onClick={() => setDisplaySwitch(true)}>X</button>
-            </div>
+        <Table
+          setSwitch={setDisplaySwitch}
+          displaySwitch={displaySwitch}
+          getAvatar={getAvatar}
+        />
 
-            <div className="contentProfile">
-              <div className="avatarBox">
-                <div className="avatar">
-                  <img src={avatar}></img>
-                </div>
-                <div className="nameProfile">Name</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Profile
+          displayProfile={displaySwitch}
+          setSwitch={setDisplaySwitch}
+          avatar={avatar}
+        />
       </div>
     </div>
   );
