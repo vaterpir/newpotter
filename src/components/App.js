@@ -5,17 +5,13 @@ import { Profile } from './Profile';
 
 import '../styles/App.css';
 const xhr = new XMLHttpRequest();
-const baseURL = 'https://www.potterapi.com/v1/';
-const keyURL =
-  '?key=$2a$10$dSooM7l5aj6uLNFOmwf/SObKzKhMgFSrbie2BUTrRmz5hw/jj6Wme';
-const mainURL = 'characters/';
 
 export const App = () => {
   const [displaySwitch, setDisplaySwitch] = useState(true);
   const [data, setData] = useState([]);
   const [avatar, setAvatar] = useState('');
 
-  const getAvatar = (url, type) => {
+  const getData = (url, type) => {
     if (type === 'avatar') setAvatar('/src/img/avatar.jpg');
     xhr.open('GET', url, true);
     xhr.onload = () => {
@@ -35,12 +31,12 @@ export const App = () => {
   return (
     <div className="App">
       <div className="content">
-        <Menu setSwitch={setDisplaySwitch} />
+        <Menu setSwitch={setDisplaySwitch} getData={getData} />
 
         <Table
           setSwitch={setDisplaySwitch}
           displaySwitch={displaySwitch}
-          getAvatar={getAvatar}
+          getAvatar={getData}
         />
 
         <Profile

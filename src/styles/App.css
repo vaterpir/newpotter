@@ -49,6 +49,45 @@ body {
 .Table {
   background-color: #f47c5a;
   height: 100%;
+  width: 100%;
+  min-width: 280px;
+  max-width: 500px;
+}
+.tableHead {
+  background-color: #5a3441;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #fff;
+}
+.tableIndex {
+  width: 20px;
+  max-width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tableName {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tableSpecies {
+  width: 25%;
+  max-width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tableHouse {
+  width: 25%;
+  max-width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Profile {
@@ -155,7 +194,7 @@ body {
   align-items: center;
   padding: 0 5px 0 0;
 }
-.mainProfile > div > div{
+.mainProfile > div > div {
   padding: 0 0 0 10px;
 }
 
