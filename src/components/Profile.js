@@ -2,9 +2,7 @@ import React from 'react';
 
 const profileURL = 'https://randomuser.me/api/';
 
-export const Profile = ({ displayProfile, setSwitch, avatar }) => {
-
-  
+export const Profile = ({ displayProfile, setSwitch, avatar, dataProfile }) => {
   return (
     <div
       className={`Profile ${displayProfile ? 'hidden' : ''}`}
@@ -24,11 +22,11 @@ export const Profile = ({ displayProfile, setSwitch, avatar }) => {
             <div className="mainProfile">
               <div>
                 <div>Name:</div>
-                <div>Hannah Abbott</div>
+                <div>{dataProfile.name}</div>
               </div>
               <div>
                 <div>Role:</div>
-                <div>student</div>
+                <div>{dataProfile.role}</div>
               </div>
             </div>
           </div>

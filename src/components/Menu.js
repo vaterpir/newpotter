@@ -7,9 +7,9 @@ const keyURL =
   '?key=$2a$10$dSooM7l5aj6uLNFOmwf/SObKzKhMgFSrbie2BUTrRmz5hw/jj6Wme';
 
 const optionsSelect = [
-  { value: 'Professors', label: 'Professors' },
-  { value: 'Students', label: 'Students' },
-  { value: 'Others', label: 'Others' },
+  { value: 'professors', label: 'Professors' },
+  { value: 'students', label: 'Students' },
+  { value: 'other', label: 'Others' },
 ];
 const customStyles = {
   option: (provided, state) => ({

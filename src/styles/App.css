@@ -1,21 +1,22 @@
 html,
 body {
-  width: 100%;
-  height: 100vh;
+  min-width: 100%;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
 }
 .App {
   background-color: #ffe1af; /* f47c5a / f5a36b / 9c4752*/
-  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .content {
   background-color: #f5a36b;
-  height: 100%;
+  min-height: 100vh;
   width: 100%;
   max-width: 800px;
   display: flex;
@@ -29,6 +30,7 @@ body {
   background-color: #9c4752;
   height: 50px;
   min-height: 50px;
+  max-height: 50px;
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -48,12 +50,77 @@ body {
 
 .Table {
   background-color: #f47c5a;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
-  min-width: 280px;
+  min-width: 200px;
   max-width: 500px;
 }
+.tableBox {
+  width: 100%;
+}
 .tableHead {
+  background-color: #5a3441;
+  height: 40px;
+  min-width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #fff;
+  user-select: none;
+  border: 1px solid #fff;
+  border-width: 0 0 1px 0;
+}
+.tableIndex {
+  width: 30px;
+  max-width: 30px;
+  min-width: 30px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tableName {
+  height: 100%;
+  width: 100%;
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #fff;
+  border-width: 0 1px 0 2px;
+}
+.tableSpecies {
+  height: 100%;
+  min-width: 80px;
+  width: 80px;
+  max-width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #fff;
+  border-width: 0 1px;
+}
+.tableHouse {
+  height: 100%;
+  min-width: 105px;
+  width: 105px;
+  max-width: 105px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #fff;
+  border-width: 0 1px;
+}
+
+.tableHead > div > button {
+  background-color: #5a3441;
+  height: 100%;
+  width: 100%;
+  border: 0;
+  outline: none;
+  color: #fff;
+}
+.tableContent {
   background-color: #5a3441;
   height: 40px;
   width: 100%;
@@ -61,42 +128,22 @@ body {
   justify-content: flex-start;
   align-items: center;
   color: #fff;
+  user-select: none;
 }
-.tableIndex {
-  width: 20px;
-  max-width: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.tableContent > div {
 }
-.tableName {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.tableSpecies {
-  width: 25%;
-  max-width: 180px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.tableHouse {
-  width: 25%;
-  max-width: 180px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.tableContent > .tableIndex {
+  border: 0;
 }
 
 .Profile {
   background-color: #5a3441;
   height: 100%;
+  min-height: calc(100vh - 50px);
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   overflow: auto;
 }

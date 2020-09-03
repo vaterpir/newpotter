@@ -6,10 +6,29 @@ import { Profile } from './Profile';
 import '../styles/App.css';
 const xhr = new XMLHttpRequest();
 
+const selectTable = (data) =>
+  [...data].reduce(
+    (acc, el, i) => {
+      const role = [...String(el.role)].slice(0, 9).join('');
+      role === 'Professor'
+        ? (acc.professors = [...acc.professors, data[i]])
+        : el.role !== 'student'
+        ? (acc.other = [...acc.other, data[i]])
+        : (acc.students = [...acc.students, data[i]]);
+      return acc;
+    },
+    {
+      students: [],
+      professors: [],
+      other: [],
+    },
+  );
+
 export const App = () => {
   const [displaySwitch, setDisplaySwitch] = useState(true);
-  const [data, setData] = useState([]);
+  const [list, setList] = useState([]);
   const [avatar, setAvatar] = useState('');
+  const [dataProfile, setDataProfile] = useState({});
 
   const getData = (url, type) => {
     if (type === 'avatar') setAvatar('/src/img/avatar.jpg');
@@ -19,7 +38,8 @@ export const App = () => {
         const data = JSON.parse(xhr.responseText);
         if (type === 'avatar') setAvatar(data.results[0].picture.large);
         else {
-          console.log(data);
+          const newData = selectTable(data)[type];
+          setList(newData);
         }
       } else {
         console.log('error');
@@ -34,8 +54,10 @@ export const App = () => {
         <Menu setSwitch={setDisplaySwitch} getData={getData} />
 
         <Table
-          setSwitch={setDisplaySwitch}
           displaySwitch={displaySwitch}
+          list={list}
+          setSwitch={setDisplaySwitch}
+          getProfile={setDataProfile}
           getAvatar={getData}
         />
 
@@ -43,6 +65,7 @@ export const App = () => {
           displayProfile={displaySwitch}
           setSwitch={setDisplaySwitch}
           avatar={avatar}
+          dataProfile={dataProfile}
         />
       </div>
     </div>
