@@ -8,12 +8,12 @@ const sortTable = (data, type, setList) => {
       return el[type];
     })
     .sort()
-    .map((characters, index) => {
+    .map((characters) => {
       return [...data].filter((charact) => charact[type] === characters);
     })
     .map((ch) => ch[0]);
-  setList(newDat);
   console.log(newDat);
+  setList(newDat);
 };
 
 export const Table = ({
