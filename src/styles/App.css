@@ -16,7 +16,7 @@ body {
 
 .content {
   background-color: #f5a36b;
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   max-width: 800px;
   display: flex;
@@ -49,91 +49,48 @@ body {
 }
 
 .Table {
-  background-color: #f47c5a;
-  min-height: 100%;
-  width: 100%;
-  min-width: 200px;
+  height: calc(100vh - 50px);
   max-width: 500px;
+  width: 100%;
 }
 .tableBox {
-  width: 100%;
+  height: 30px;
+  min-height: 30px;
+  max-height: 30px;
 }
 .tableHead {
-  background-color: #5a3441;
-  height: 40px;
-  min-width: 100%;
+  height: 30px;
+  min-height: 30px;
+  max-height: 30px;
+  width: calc(100% - 6px);
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  color: #fff;
-  user-select: none;
-  border: 1px solid #fff;
-  border-width: 0 0 1px 0;
 }
-.tableIndex {
-  width: 30px;
-  max-width: 30px;
-  min-width: 30px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.tableHead > button {
+  width: 100%;
 }
 .tableName {
-  height: 100%;
-  width: 100%;
-  min-width: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #fff;
-  border-width: 0 1px 0 2px;
 }
 .tableSpecies {
-  height: 100%;
-  min-width: 80px;
-  width: 80px;
-  max-width: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #fff;
-  border-width: 0 1px;
 }
 .tableHouse {
-  height: 100%;
-  min-width: 105px;
-  width: 105px;
-  max-width: 105px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #fff;
-  border-width: 0 1px;
 }
 
-.tableHead > div > button {
-  background-color: #5a3441;
-  height: 100%;
-  width: 100%;
-  border: 0;
-  outline: none;
-  color: #fff;
+.row {
 }
-.tableContent {
-  background-color: #5a3441;
-  height: 40px;
+
+.TableContent {
   width: 100%;
+  height: calc(100vh - 80px);
+  overflow-y: scroll;
+}
+.TableContent > div {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  color: #fff;
-  user-select: none;
+  width: 100%;
 }
-.tableContent > div {
-}
-.tableContent > .tableIndex {
-  border: 0;
+.TableContent > div > div {
+  width: 100%;
+  border: 1px solid #000;
+  border-width: 0 1px 0 0;
 }
 
 .Profile {
@@ -247,4 +204,16 @@ body {
 
 .hidden {
   display: none;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #ffe1af;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #5a3441;
 }

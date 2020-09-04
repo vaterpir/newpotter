@@ -48,6 +48,34 @@ export const App = () => {
     xhr.send();
   };
 
+  const sortTable = (data, type) => {
+    const newDat = [...data]
+      .sort((prev, next) =>
+        String(prev[type]) < String(next[type])
+          ? -1
+          : String(prev[type]) < String(next[type])
+          ? 1
+          : 0,
+      )
+      .map((pers) => {
+        pers.species = pers.species
+          .split(' ')
+          .map((spl) =>
+            [...String(spl)]
+              .map((bukva, index) =>
+                index < 8 ? bukva : index === 8 ? '..' : '',
+              )
+              .join(''),
+          )
+          .toString()
+          .split(',')
+          .join(' ');
+        return pers;
+      });
+    setList(newDat);
+    return newDat;
+  };
+
   return (
     <div className="App">
       <div className="content">
@@ -59,6 +87,7 @@ export const App = () => {
           setSwitch={setDisplaySwitch}
           getProfile={setDataProfile}
           getAvatar={getData}
+          sortTable={sortTable}
         />
 
         <Profile

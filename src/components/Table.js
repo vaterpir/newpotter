@@ -1,69 +1,18 @@
 import React, { useState } from 'react';
+import { TableContent } from './TableContent';
 
 const urlAvatar = 'https://randomuser.me/api/';
 
-const sortTable = (data, type, setList) => {
-  const newDat = [...data]
-    .map((el) => {
-      return el[type];
-    })
-    .sort()
-    .map((characters, index) => {
-      return [...data].filter((charact) => charact[type] === characters);
-    })
-    .map((ch) => ch[0]);
-  setList(newDat);
-  console.log(newDat);
-};
-
-export const Table = ({
-  getAvatar,
-  displaySwitch,
-  list,
-  setSwitch,
-  getProfile,
-}) => {
-  const [tableList, setTableList] = useState(list);
-
+export const Table = ({ displaySwitch, list, sortTable }) => {
   return (
     <div className={`Table ${!displaySwitch ? 'hidden' : ''}`}>
       <div className="tableBox">
         <div className="tableHead">
-          <div className="tableIndex">#</div>
-          <div className="tableName">
-            <button onClick={() => sortTable(list, 'name', setTableList)}>
-              Name ↓
-            </button>
-          </div>
-          <div className="tableSpecies">
-            <button onClick={() => sortTable(list, 'species', setTableList)}>
-              Species ↓
-            </button>
-          </div>
-          <div className="tableHouse">
-            <button onClick={() => sortTable(list, 'house', setTableList)}>
-              House ↓
-            </button>
-          </div>
+          <button onClick={() => sortTable(list, 'name')}>Name ↓</button>
+          <button onClick={() => sortTable(list, 'species')}>Species ↓</button>
+          <button onClick={() => sortTable(list, 'house')}>House ↓</button>
         </div>
-        {[...tableList].map((el, index) => {
-          return (
-            <div
-              key={index}
-              className="tableContent"
-              onClick={() => {
-                setSwitch(false);
-                getAvatar(urlAvatar, 'avatar');
-                getProfile(el);
-              }}
-            >
-              <div className="tableIndex">{index}</div>
-              <div className="tableName">{el.name || '---'}</div>
-              <div className="tableSpecies">{el.species || '---'}</div>
-              <div className="tableHouse">{el.house || '---'}</div>
-            </div>
-          );
-        })}
+        <TableContent list={list} />
       </div>
     </div>
   );

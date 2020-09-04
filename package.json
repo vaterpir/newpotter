@@ -8,7 +8,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -b build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --host 192.168.0.7 --port 3000 --mode development --open --hot",
+    "start": "webpack-dev-server --host 192.168.1.49 --port 3000 --mode development --open --hot",
     "build": "webpack --mode production",
     "prettier": "prettier  --write src/**/*.js",
     "lint": "eslint --debug src/",
