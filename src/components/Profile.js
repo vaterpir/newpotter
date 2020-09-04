@@ -1,4 +1,5 @@
 import React from 'react';
+import { DescriptProfile } from './DescriptProfile';
 
 const profileURL = 'https://randomuser.me/api/';
 
@@ -15,19 +16,22 @@ export const Profile = ({ displayProfile, setSwitch, avatar, dataProfile }) => {
         </div>
 
         <div className="contentProfile">
-          <div className="avatarBox">
+          <div className="contentBoxProfile">
             <div className="avatar">
               <img src={!displayProfile ? avatar : '/src/img/avatar.jpg'} />
             </div>
             <div className="mainProfile">
-              <div>
+              <div className="mainHeadProfile">
                 <div>Name:</div>
-                <div>{dataProfile.name}</div>
+                <div>{dataProfile.name || '---'}</div>
               </div>
-              <div>
+              <div className="mainHeadProfile">
                 <div>Role:</div>
-                <div>{dataProfile.role}</div>
+                <div>{dataProfile.role || '---'}</div>
               </div>
+              <div className="headDesc">Description</div>
+
+              <DescriptProfile dataProfile={dataProfile} />
             </div>
           </div>
         </div>
