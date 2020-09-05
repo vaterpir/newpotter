@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { TableContent } from './TableContent';
 
-const baseURL = 'https://www.potterapi.com/v1/';
-const mainURL = 'characters/';
-const keyURL =
-  '?key=$2a$10$dSooM7l5aj6uLNFOmwf/SObKzKhMgFSrbie2BUTrRmz5hw/jj6Wme';
-const fullURL = `${baseURL}${mainURL}${keyURL}`;
+const sortTableWord = (data, value, type) =>
+  [...data].filter(
+    (char) =>
+      String(type ? char.spell : char.name).slice(0, String(value).length) ===
+      String(value),
+  );
 
 export const Table = ({
   displaySwitch,
   list,
-  sortTable,
   getProfile,
   showProfile,
   getData,
-  valueSearch,
-  setValueSearch,
-  type
+  sortTable,
+  type,
 }) => {
+  const [valueSearch, setValueSearch] = useState('');
+
   return (
     <div className={`Table ${!displaySwitch ? 'hidden' : ''}`}>
       <div className="tableBox">
@@ -28,20 +29,26 @@ export const Table = ({
             value={valueSearch}
             onChange={(event) => {
               setValueSearch(event.target.value);
-              getData(fullURL, type, 'name', valueSearch, 'search');
             }}
           />
         </div>
         <div className="tableHead">
-          <button onClick={() => sortTable(list, 'name')}>Name ↓</button>
-          <button onClick={() => sortTable(list, 'species')}>Species ↓</button>
-          <button onClick={() => sortTable(list, 'house')}>House ↓</button>
+          <button onClick={() => sortTable(list, type ? 'spell' : 'name')}>
+            {`${type ? 'Spell' : 'Name'} ↓`}
+          </button>
+          <button onClick={() => sortTable(list, type ? 'type' : 'species')}>
+            {`${type ? 'Type' : 'Species'} ↓`}
+          </button>
+          <button onClick={() => sortTable(list, type ? 'effect' : 'house')}>
+            {`${type ? 'Effect' : 'House'} ↓`}
+          </button>
         </div>
         <TableContent
-          list={list}
+          list={sortTableWord(list, valueSearch, type)}
           showProfile={showProfile}
           getProfile={getProfile}
           getAvatar={getData}
+          typeTable={type}
         />
       </div>
     </div>

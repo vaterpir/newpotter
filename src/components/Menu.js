@@ -3,6 +3,7 @@ import Select from 'react-select';
 
 const baseURL = 'https://www.potterapi.com/v1/';
 const mainURL = 'characters/';
+const extraURL = 'spells/';
 const keyURL =
   '?key=$2a$10$dSooM7l5aj6uLNFOmwf/SObKzKhMgFSrbie2BUTrRmz5hw/jj6Wme';
 
@@ -10,6 +11,7 @@ const optionsSelect = [
   { value: 'professors', label: 'Professors' },
   { value: 'students', label: 'Students' },
   { value: 'other', label: 'Others' },
+  { value: 'spells', label: 'Spells' },
 ];
 const customStyles = {
   option: (provided, state) => ({
@@ -19,11 +21,15 @@ const customStyles = {
 };
 
 export const Menu = ({ setSwitch, getData }) => {
-  const fullURL = `${baseURL}${mainURL}${keyURL}`;
+  const charactersURL = `${baseURL}${mainURL}${keyURL}`;
+  const spellsURL = `${baseURL}${extraURL}${keyURL}`;
+
   const change = (type) => {
     setSwitch(true);
-    getData(fullURL, type);
+    if (type !== 'spells') getData(charactersURL, type);
+    else getData(spellsURL, type);
   };
+  
   return (
     <div className="Menu">
       <div className="logoMenu">Hogwarts is:</div>

@@ -6,7 +6,7 @@ import { Profile } from './Profile';
 import '../styles/App.css';
 const xhr = new XMLHttpRequest();
 
-const selectTable = (data) =>
+const selectTable = (data, type) =>
   [...data].reduce(
     (acc, el, i) => {
       const role = [...String(el.role)].slice(0, 9).join('');
@@ -32,53 +32,15 @@ export const App = () => {
   const [valueSearch, setValueSearch] = useState('');
   const [typeTable, setTypeTable] = useState('');
 
-  const sortSearch = (data, type, value) => {
-    if (value === '') {
-      return data;
-    } else {
-      const newDat = [...data].filter(
-        (charact) =>
-          charact[type].toString().slice(0, String(value).length) ===
-          String(value),
-      );
-      console.log(newDat);
-      return newDat;
-    }
-  };
-
-  const sortTable = (data, type, value, extra) => {
-    if (!extra) {
-      const newDat = [...data]
-        .sort((prev, next) =>
-          String(prev[type]) < String(next[type])
-            ? -1
-            : String(prev[type]) < String(next[type])
-            ? 1
-            : 0,
-        )
-        .map((pers) => {
-          pers.species = pers.species
-            .split(' ')
-            .map((spl) =>
-              [...String(spl)]
-                .map((bukva, index) =>
-                  index < 8 ? bukva : index === 8 ? '..' : '',
-                )
-                .join(''),
-            )
-            .toString()
-            .split(',')
-            .join(' ');
-          return pers;
-        });
-      setList(newDat);
-      return newDat;
-    }
+  const sortTable = (data, type) => {
+    const newDat = [...data].sort((prev, next) =>
+      String(prev[type]) < String(next[type]) ? -1 : 0,
+    );
+    setList(newDat);
+    return newDat;
   };
 
   const getData = (url, type, extra, value, option) => {
-    setTypeTable(type);
-
     if (type === 'avatar') setAvatar('/src/img/avatar.jpg');
     xhr.open('GET', url, true);
     xhr.onload = () => {
@@ -89,9 +51,13 @@ export const App = () => {
           setList(newData);
         } else {
           if (type === 'avatar') setAvatar(data.results[0].picture.large);
-          else {
+          else if (type === 'spells') {
+            setList(data);
+            setTypeTable(type);
+          } else {
             const newData = selectTable(data)[type];
             setList(newData);
+            setTypeTable('');
           }
         }
       } else {
